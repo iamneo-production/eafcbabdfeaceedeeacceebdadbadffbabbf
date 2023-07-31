@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div className="App">
-     <Stopwatch time={time} start={start} pause={pause} reset={reset} resume={resume} status={status}/>
+     <Stopwatch time={time} start={start} pause={pause} reset={reset} resume={resume} status={status} />
     </div>
   );
 }
