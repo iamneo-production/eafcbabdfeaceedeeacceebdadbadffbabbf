@@ -1,37 +1,65 @@
-import React from 'react'
 
-const Stopwatch = (props) => {
-  return (
-    <div>
-        <div>
-            <p data-testid="time">
-            {(props.time.h >= 10)? props.time.h : "0"+props.time.h}:{(props.time.m >= 10)? props.time.m : "0"+props.time.m}
-             :{(props.time.s >= 10)? props.time.s : "0"+props.time.s}
-            </p>
-        </div>
-        <div>
-            {(props.status===0)?
-            <div>
-                 <button data-testid="start" onClick={props.start}>start</button>
-                 <button data-testid="reset" disabled={true}>reset</button>
-            </div>:""
-            }
-            {(props.status===1)?
-            <div>
-                 <button data-testid="pause" onClick={props.pause}>pause</button>
-                 <button data-testid="reset" onClick={props.reset}>reset</button>
-            </div>:""
-            }
-            {(props.status===2)?
-            <div>
-                 <button data-testid='resume' onClick={props.resume}>resume</button>
-                 <button data-testid='reset' onClick={props.reset}>reset</button>
-            </div>:""
-            }
-           
-        </div>
-    </div>
-  )
-} 
+import { useState, useEffect, useRef, React } from "react";
+import '/home/coder/project/workspace/reactapp/src/App.css';
 
-export default Stopwatch 
+
+export default function Stopwatch(props){
+
+
+    const [time, setTime] = useState(0)
+    const [isActive, setIsActive] = useState(false)
+    const [isPaused, setIsPaused] = useState(false)
+    const increment = useRef(null)
+
+
+    const handleStart = () => {
+        setIsActive(true);
+        setIsPaused(false);
+
+        increment.current = setInterval(() => {
+          setTime((time) => time + 1000)}, 1000)
+    };
+
+
+    const handlePause = () => {
+      clearInterval(increment.current)
+      setIsPaused(!isPaused);
+    };
+
+    const handleResume = () => {
+      setIsPaused(!isPaused);
+      increment.current = setInterval(() => {
+        setTime((time) => time + 1000)}, 1000)
+    };
+  
+    const handleReset = () => {
+     clearInterval(increment.current)
+      setIsActive(false)
+      setIsPaused(false)
+      setTime(0)
+    };
+
+    return(
+        <section id='stopwatch'>
+            <div className='inner' >
+            <h1> React Stopwatch </h1>
+
+            <p id='time' data-testid='time'>{`0${Math.floor(time % 360000)}`.slice(-2)} : {`0${Math.floor(time/60000) % 60}`.slice(-2)} : {`0${Math.floor(time/1000) % 60}`.slice(-2)} </p>
+
+            <div className='buttons'>
+            
+            {
+            !isActive && !isPaused?
+              <button onClick={handleStart} data-testid='start'>Start</button>
+              : (
+                !isPaused ? <button data-testid='pause' onClick={handlePause}>Pause</button> :  <button data-testid='resume' onClick={handleResume}>Resume</button>
+              )
+            }
+
+          <button id='reset' data-testid='reset' onClick={handleReset} disabled={!isActive}>Reset</button>
+        </div>
+        </div>
+
+        </section>
+    )
+}
