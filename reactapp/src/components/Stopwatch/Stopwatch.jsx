@@ -24,8 +24,8 @@ const Stopwatch = (props) => {
             }
             {(props.status===2)?
             <div>
-                 <button data-testid="resume" onClick={props.resume}>resume</button>
-                 <button data-testid="reset" onClick={props.reset}>reset</button>
+                 <button data-testid='resume' onClick={props.resume}>resume</button>
+                 <button data-testid='reset' onClick={props.reset}>reset</button>
             </div>:""
             }
            
