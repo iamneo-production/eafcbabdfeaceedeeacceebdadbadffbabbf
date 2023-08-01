@@ -43,7 +43,7 @@ export default function Stopwatch(){
             <div className='inner' >
             
 
-            <p id='time' data-testid='time'>{`0${Math.floor(time % 360000)}`.slice(-2)} : {`0${Math.floor(time/60000) % 60}`.slice(-2)} : {`0${Math.floor(time/1000) % 60}`.slice(-2)} </p>
+            <p id='time' data-testid='time'>{`0${Math.floor(time % 360000)}`.slice(-2)}:{`0${Math.floor(time/60000) % 60}`.slice(-2)}:{`0${Math.floor(time/1000) % 60}`.slice(-2)} </p>
 
             <div className='buttons'>
             
